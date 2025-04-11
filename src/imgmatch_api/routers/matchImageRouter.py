@@ -18,4 +18,5 @@ async def match_image(file: UploadFile = File(...)):
     result = matchImageService(temp_path)  # Truyền path vào dịch vụ xử lý
     os.remove(temp_path)  # Xóa file sau khi dùng
 
-    return {"matched": result}
+    # return {"matched": result}
+    return result
