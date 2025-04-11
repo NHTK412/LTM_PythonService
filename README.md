@@ -1,0 +1,1 @@
+Vào virutal env: --> venv\Scripts\activate.bat
