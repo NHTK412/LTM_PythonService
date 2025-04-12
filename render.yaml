@@ -3,7 +3,7 @@ services:
     name: backend-ltm
     env: python
     buildCommand: poetry install
-    startCommand: poetry run uvicorn uvicorn_runner:app --host 0.0.0.0 --port 10000
+    startCommand: uvicorn main:app --host 0.0.0.0 --port 10000
     envVars:
       - key: PORT
         value: 10000
