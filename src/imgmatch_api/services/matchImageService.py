@@ -53,7 +53,9 @@ def recognize_faces_in_image(image_path, known_face_encodings, known_face_names)
 
 # Hàm chính chạy chương trình
 def matchImageService(image_path):
-    faces_dir = 'D:/Programming_Language/Python/LearingFastAPI/imgmatch_api/Data'
+    # faces_dir = 'D:/Programming_Language/Python/LearingFastAPI/imgmatch_api/Data'
+    faces_dir = 'Data'
+
 
     if not os.path.exists(faces_dir):
         os.makedirs(faces_dir)
