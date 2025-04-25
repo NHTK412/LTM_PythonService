@@ -16,7 +16,7 @@ async def match_image(file: UploadFile = File(...)):
         shutil.copyfileobj(file.file, buffer)
 
     result = matchImageService(temp_path)  # Truyền path vào dịch vụ xử lý
-    os.remove(temp_path)  # Xóa file sau khi dùng
+    # os.remove(temp_path)  # Xóa file sau khi dùng
 
     # return {"matched": result}
     return result

@@ -18,6 +18,11 @@ def create_face_database(faces_dir):
                 known_face_encodings.append(face_encodings[0])  # Lưu vector khuôn mặt đầu tiên
                 known_face_names.append(os.path.splitext(filename)[0])  # Lưu tên file (không đuôi) làm tên người
 
+
+    for i in range(len(known_face_encodings)):
+        print(f"{i + 1 } : {known_face_names[i]} - {known_face_encodings[i]}")  # In ra danh sách khuôn mặt đã nạp
+
+
     return known_face_encodings, known_face_names  # Trả về danh sách vector và tên
 
 
