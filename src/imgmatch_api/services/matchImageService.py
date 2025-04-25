@@ -68,7 +68,8 @@ def recognize_faces_in_image(image_path):
 # Hàm chính chạy chương trình
 def matchImageService(image_path):
     # faces_dir = 'D:/Programming_Language/Python/LearingFastAPI/imgmatch_api/Data'
-    faces_dir = 'Data'
+    faces_dir = os.getenv("FACES_DIR")
+    print(faces_dir)
     global known_face_encodings, known_face_names
 
     if not os.path.exists(faces_dir):
@@ -87,3 +88,27 @@ def matchImageService(image_path):
     result = recognize_faces_in_image(image_path)
     return result
 
+def addImageService(filename):
+    faces_dir = os.getenv("FACES_DIR")
+    if filename.endswith(".jpg") or filename.endswith(".png"):
+            image_path = os.path.join(faces_dir, filename)  # Lấy đường dẫn đầy đủ đến ảnh
+            if not os.path.isfile(image_path):
+                return False
+            face_image = face_recognition.load_image_file(image_path)  # Tải ảnh
+            face_encodings = face_recognition.face_encodings(face_image)  # Trích xuất vector khuôn mặt
+
+            if face_encodings:  # Kiểm tra xem ảnh có khuôn mặt không
+                known_face_encodings.append(face_encodings[0])  # Lưu vector khuôn mặt đầu tiên
+                known_face_names.append(os.path.splitext(filename)[0])  # Lưu tên file (không đuôi) làm tên người
+                return True
+            return False
+
+def deleteImageService(filename : str):
+    print(filename.split(".")[0] )
+    filename = filename.split(".")[0]
+    if filename in known_face_names:
+        index = known_face_names.index(filename)
+        known_face_names.pop(index)
+        known_face_encodings.pop(index)
+        return True
+    return False

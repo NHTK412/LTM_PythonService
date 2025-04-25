@@ -1,7 +1,7 @@
 from fastapi import APIRouter, File, UploadFile
 import shutil
 import os
-from ..services.matchImageService import matchImageService
+from ..services.matchImageService import matchImageService, addImageService, deleteImageService
 
 router = APIRouter()
 
@@ -20,3 +20,21 @@ async def match_image(file: UploadFile = File(...)):
 
     # return {"matched": result}
     return result
+
+
+@router.post("/add-image")
+async def add_image(filename : str):
+    print(filename)
+    flag = addImageService(filename)
+    if flag:
+        return {"status": "success", "name": filename}
+    return {"status": "fail", "message": "Không phát hiện khuôn mặt nào."}
+
+
+@router.post("/delete-image")
+async def delete_image(filename : str):
+    print(filename)
+    flag = deleteImageService(filename)
+    if flag:
+        return {"status": "success", "name": filename}
+    return {"status": "fail", "message": "Ảnh không tồn tại"}

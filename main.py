@@ -39,6 +39,6 @@ app = FastAPI()
 print(str(os.getenv("FACES_DIR")))
 print("========> Đang tiến hành khởi tạo")
 create_face_database(os.getenv("FACES_DIR"))
-print("========> Khởi tạo thành côngcông")
+print("========> Khởi tạo thành công")
 
 app.include_router(router , prefix="/v1")
