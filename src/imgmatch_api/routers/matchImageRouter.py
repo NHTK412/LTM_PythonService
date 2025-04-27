@@ -7,7 +7,7 @@ router = APIRouter()
 
 @router.post("/match-image")
 async def match_image(file: UploadFile = File(...)):
-    temp_dir = "temp_uploads"
+    temp_dir = os.getenv("UPLOAD_DIR")
     os.makedirs(temp_dir, exist_ok=True)
 
     temp_path = os.path.join(temp_dir, file.filename)

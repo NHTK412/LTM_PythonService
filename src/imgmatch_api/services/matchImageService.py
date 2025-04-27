@@ -2,14 +2,22 @@ import face_recognition  # Thư viện xử lý nhận diện khuôn mặt
 import numpy as np       # Thư viện xử lý toán học, đặc biệt là mảng
 import os                # Thư viện thao tác với hệ thống tệp
 
-
-
 known_face_encodings = []
 known_face_names = []
 
-
 # Hàm tạo cơ sở dữ liệu khuôn mặt từ thư mục ảnh mẫu
 def create_face_database(faces_dir):
+    if not os.path.exists(faces_dir):
+        os.makedirs(faces_dir)
+        print(f"Đã tạo thư mục '{faces_dir}'. Vui lòng thêm ảnh mẫu.")
+        return None
+
+    image_count = sum(1 for f in os.listdir(faces_dir)
+                      if f.endswith('.jpg') or f.endswith('.png'))
+    if image_count == 0:
+        print(f"❌ Không có ảnh mẫu trong thư mục '{faces_dir}'.")
+        return None
+    
     global known_face_encodings, known_face_names
     known_face_encodings = []  # Danh sách vector đặc trưng (embedding) của khuôn mặt
     known_face_names = []      # Danh sách tên tương ứng với mỗi vector đặc trưng
@@ -26,8 +34,8 @@ def create_face_database(faces_dir):
                 known_face_names.append(os.path.splitext(filename)[0])  # Lưu tên file (không đuôi) làm tên người
 
 
-    for i in range(len(known_face_encodings)):
-        print(f"{i + 1 } : {known_face_names[i]} - {known_face_encodings[i]}")  # In ra danh sách khuôn mặt đã nạp
+    # for i in range(len(known_face_encodings)):
+    #     print(f"{i + 1 } : {known_face_names[i]} - {known_face_encodings[i]}")  # In ra danh sách khuôn mặt đã nạp
 
     known_face_encodings = known_face_encodings
     known_face_names = known_face_names
@@ -71,19 +79,6 @@ def matchImageService(image_path):
     faces_dir = os.getenv("FACES_DIR")
     print(faces_dir)
     global known_face_encodings, known_face_names
-
-    if not os.path.exists(faces_dir):
-        os.makedirs(faces_dir)
-        print(f"Đã tạo thư mục '{faces_dir}'. Vui lòng thêm ảnh mẫu.")
-        return None
-
-    image_count = sum(1 for f in os.listdir(faces_dir)
-                      if f.endswith('.jpg') or f.endswith('.png'))
-    if image_count == 0:
-        print(f"❌ Không có ảnh mẫu trong thư mục '{faces_dir}'.")
-        return None
-
-    # known_face_encodings, known_face_names = create_face_database(faces_dir)
     print(f"📦 Đã nạp {len(known_face_encodings)} khuôn mặt.")
     result = recognize_faces_in_image(image_path)
     return result
